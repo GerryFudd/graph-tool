@@ -3,8 +3,8 @@ var root = document.getElementById('root');
 var MAX = 2;
 var WINDOW_MAX_X = 2;
 var WINDOW_MAX_Y = 2;
-var RESOLUTION = 150;
-var PAGE_SIZE = window.innerWidth;
+var RESOLUTION = 300;
+var PAGE_SIZE = window.outerWidth;
 var CELL_SIZE = Math.floor(PAGE_SIZE / RESOLUTION);
 
 function scaleTo256(num) {
@@ -69,9 +69,9 @@ function makeHexFromComplex(real, imaginary) {
   // var scaledRGB = makeRGBScale(makeRotationFromComplex(real, imaginary));
   var scaledRGB = {
     red: (real + MAX) / (2 * MAX),
-    green: (imaginary + MAX) / (2 * MAX),
+    green: 1 - (Math.max(real, imaginary) + MAX) / (2 * MAX),
     // blue: makeNormFromComplex(real, imaginary) / (Math.sqrt(2) * MAX)
-    blue: 1 - (real + MAX) / (4 * MAX) - (imaginary + MAX) / (4 * MAX)
+    blue: (imaginary + MAX) / (2 * MAX)
     // blue: 0,
     // blue: 0.75
   };
@@ -171,8 +171,8 @@ function identity(real, imaginary) {
   return {real: real, imaginary: imaginary};
 }
 
-// generateFromFunction(identity)
-generateFromFunction(reciprocal)
+generateFromFunction(identity)
+// generateFromFunction(reciprocal)
 // generateFromFunction(squared)
 // generateFromFunction(scaled(4))
 // / (real * real + imaginary * imaginary)
