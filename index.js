@@ -1,4 +1,15 @@
-var root = document.getElementById('root');
+import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
+
+class Container extends Component {
+  render() {
+    return <p>Hello!</p>
+  }
+}
+
+const root = document.getElementById('root');
+
+ReactDOM.render(<Container/>, root);
 
 var MAX = 2;
 var WINDOW_MAX_X = 2;
@@ -171,7 +182,7 @@ function identity(real, imaginary) {
   return {real: real, imaginary: imaginary};
 }
 
-generateFromFunction(identity)
+// generateFromFunction(identity)
 // generateFromFunction(reciprocal)
 // generateFromFunction(squared)
 // generateFromFunction(scaled(4))
