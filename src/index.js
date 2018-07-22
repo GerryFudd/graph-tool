@@ -1,14 +1,39 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {ComplexNumber} from 'calculator';
 
 import Container from './container';
 
-var RESOLUTION = 300;
-var PAGE_SIZE = window.outerWidth;
+const RESOLUTION = 300;
+const WINDOW_MAX_REAL = 2;
+const WINDOW_MAX_IMAGINARY = 2;
+const OUTPUT_MAX_REAL = 2;
+const OUTPUT_MAX_IMAGINARY = 2;
+
+const reciprocal = complexNumber => complexNumber.pow(-1);
 
 const root = document.getElementById('root');
 
-ReactDOM.render(<Container resolution={RESOLUTION} cellSize={Math.floor(PAGE_SIZE / RESOLUTION)}/>, root);
+const render = () => {
+  ReactDOM.render(
+    <Container
+      resolution={RESOLUTION}
+      cellSize={Math.floor(window.outerWidth / RESOLUTION)}
+      windowMaxReal={WINDOW_MAX_REAL}
+      windowMaxImaginary={WINDOW_MAX_IMAGINARY}
+      outputMaxReal={OUTPUT_MAX_REAL}
+      outputMaxImaginary={OUTPUT_MAX_IMAGINARY}
+    />,
+    root
+  );
+};
+
+render();
+
+// Hot Module Replacement API
+if (module.hot) {
+  module.hot.accept('./container', render);
+}
 
 // var colorMapping = [
 //   [1, 0, 0],
