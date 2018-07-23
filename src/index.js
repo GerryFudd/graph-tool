@@ -1,16 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {ComplexNumber} from 'calculator';
 
 import Container from './container';
 
-const RESOLUTION = 300;
-const WINDOW_MAX_REAL = 2;
-const WINDOW_MAX_IMAGINARY = 2;
-const OUTPUT_MAX_REAL = 2;
-const OUTPUT_MAX_IMAGINARY = 2;
-
-const reciprocal = complexNumber => complexNumber.pow(-1);
+const RESOLUTION = 101;
 
 const root = document.getElementById('root');
 
@@ -18,11 +11,7 @@ const render = () => {
   ReactDOM.render(
     <Container
       resolution={RESOLUTION}
-      cellSize={Math.floor(window.outerWidth / RESOLUTION)}
-      windowMaxReal={WINDOW_MAX_REAL}
-      windowMaxImaginary={WINDOW_MAX_IMAGINARY}
-      outputMaxReal={OUTPUT_MAX_REAL}
-      outputMaxImaginary={OUTPUT_MAX_IMAGINARY}
+      cellSize={Math.floor(window.outerWidth / (RESOLUTION - 1))}
     />,
     root
   );

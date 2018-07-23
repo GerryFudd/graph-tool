@@ -1,85 +1,65 @@
 import React, {Component} from 'react';
-import {ComplexNumber} from 'calculator';
+import {Polynomial, ComplexNumber} from 'calculator';
+import ReactTooltip from 'react-tooltip';
 
-import Cell from './cell';
+import Graph from './graph';
+import Header from './header';
+
+const identity = complexNumber => complexNumber;
+const reciprocal = complexNumber => complexNumber.pow(2).plus([1, 0]).pow(-1).plus(new Polynomial([-1]).evaluate(complexNumber));
+const exponential = complexNumber => new ComplexNumber(Math.cos(complexNumber.imaginary), Math.sin(complexNumber.imaginary)).times([Math.exp(complexNumber.real), 0]);
+
+const functions = {identity, reciprocal, exponential};
+
+const viewSettings = {
+  identity: {
+    windowMaxReal: 2,
+    windowMaxImaginary: 2,
+    outputMaxReal: 2,
+    outputMaxImaginary: 2
+  },
+  reciprocal: {
+    windowMaxReal: 2,
+    windowMaxImaginary: 2,
+    outputMaxReal: 2,
+    outputMaxImaginary: 2
+  },
+  exponential: {
+    windowMaxReal: 2,
+    windowMaxImaginary: Math.PI,
+    outputMaxReal: 2,
+    outputMaxImaginary: 2
+  }
+}
 
 export default class Container extends Component {
-  isInteger(i, maximum) {
-    return i % Math.floor(this.props.resolution/(2 * maximum)) === 0;
+  constructor(props) {
+    super(props);
+
+    this.state = {viewSettings: viewSettings.identity, func: functions.identity};
+    this.changeFunc = this.changeFunc.bind(this);
   }
 
-  isGridCell(cellIndex, rowIndex) {
-    const {windowMaxReal, windowMaxImaginary, resolution} = this.props;
-
-    const zeroIndex = Math.floor(resolution / 2);
-    if ([cellIndex, rowIndex].indexOf(zeroIndex) > -1) {
-      return true;
-    }
-
-    if (
-      (this.isInteger(cellIndex, windowMaxReal) && rowIndex === zeroIndex - 1) ||
-      (this.isInteger(resolution - rowIndex, windowMaxImaginary) && cellIndex === zeroIndex + 1)
-    ) {
-      return true;
-    }
-
-    return false;
-  }
-
-  makeValueFromIndex(i, coordinate) {
-    const maximum = this.props[coordinate];
-    if (i === Math.floor(this.props.resolution / 2)) {
-      return 0;
-    }
-    return 2 * maximum * (i / this.props.resolution - 0.5);
-  }
-
-  makeCellProps(cellIndex, rowIndex) {
-    const {func = input => input, resolution, outputMaxReal, outputMaxImaginary} = this.props;
-    const real = this.makeValueFromIndex(cellIndex, 'windowMaxReal');
-    const imaginary = this.makeValueFromIndex(resolution - rowIndex, 'windowMaxImaginary');
-    return {
-      outputMaxReal,
-      outputMaxImaginary,
-      key: cellIndex,
-      complex: func(new ComplexNumber(real, imaginary)),
-      size: this.props.cellSize,
-      cellIsGridCell: this.isGridCell(cellIndex, rowIndex)
-    };
-  }
-
-  renderRow(rowIndex) {
-    const {resolution} = this.props;
-    const cells = [];
-    // var result = func(real, imaginary);
-    while (cells.length < resolution) {
-      cells.push(this.makeCellProps(cells.length, rowIndex));
-    }
-    return <div
-      key={rowIndex}
-      style={{
-        display: 'flex',
-        'flex-direction': 'row'
-      }}
-    >
-      {cells.map(cellProps => <Cell {...cellProps}/>)}
-    </div>;
+  changeFunc(event) {
+    const newfunc = event.target.value;
+    this.setState({
+      func: functions[newfunc],
+      viewSettings: viewSettings[newfunc]
+    });
   }
 
   render() {
-    const {resolution} = this.props;
-    const rowIndices = [];
-    while (rowIndices.length < resolution) {
-      rowIndices.push(rowIndices.length);
-    }
+    const {func, viewSettings} = this.state;
+    const {outputMaxReal, outputMaxImaginary} = viewSettings;
     return <div
       style={{
         display: 'flex',
-        'flex-direction': 'column',
-        'background-color': '#ccc'
+        'flexDirection': 'column'
       }}
     >
-      {rowIndices.map(rowIndex => this.renderRow(rowIndex))}
+      <Header changeFunc={this.changeFunc} functions={functions} {...{outputMaxReal, outputMaxImaginary}}/>
+      <Graph {...Object.assign({}, this.props, viewSettings)} func={func}/>
+      <ReactTooltip />
     </div>
   }
 }

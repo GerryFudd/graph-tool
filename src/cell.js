@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {ComplexNumber} from 'calculator';
 
 const scaleTo256 = num => Math.floor(255 * num);
 
@@ -33,6 +34,7 @@ export default class Cell extends Component {
   render() {
     const {size, cellIsGridCell, complex: {real, imaginary}} = this.props;
     return <div
+      data-tip={new ComplexNumber(real, imaginary).textVersion()}
       style={{background: cellIsGridCell ? '#000' : this.makeHexFromComplex(real, imaginary),
         width: size,
         height: size

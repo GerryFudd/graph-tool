@@ -7,6 +7,7 @@ const url = ENVIRONMENT === 'production' ? 'mycoolurl' : 'localhost';
 const port = ENVIRONMENT === 'development' ? ':8080' : '';
 
 module.exports = {
+  mode: ENVIRONMENT,
   context: path.resolve(__dirname, 'src'),
   entry: [
     'react-hot-loader/patch',
@@ -36,9 +37,7 @@ module.exports = {
 
     publicPath: '/',
     // match the output `publicPath`
-    historyApiFallback: true,
-    
-    mode: ENVIRONMENT
+    historyApiFallback: true
   },
   module: {
     rules: [
