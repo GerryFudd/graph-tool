@@ -6,13 +6,20 @@ import Graph from './graph';
 import Header from './header';
 
 const identity = complexNumber => complexNumber;
-const reciprocal = complexNumber => complexNumber.pow(2).plus([1, 0]).pow(-1).plus(new Polynomial([-1]).evaluate(complexNumber));
+const reciprocal = complexNumber => complexNumber.pow(-1);
+const squared = complexNumber => complexNumber.pow(2);
 const exponential = complexNumber => new ComplexNumber(Math.cos(complexNumber.imaginary), Math.sin(complexNumber.imaginary)).times([Math.exp(complexNumber.real), 0]);
 
-const functions = {identity, reciprocal, exponential};
+const functions = {identity, squared, reciprocal, exponential};
 
 const viewSettings = {
   identity: {
+    windowMaxReal: 2,
+    windowMaxImaginary: 2,
+    outputMaxReal: 2,
+    outputMaxImaginary: 2
+  },
+  squared: {
     windowMaxReal: 2,
     windowMaxImaginary: 2,
     outputMaxReal: 2,
@@ -59,7 +66,7 @@ export default class Container extends Component {
     >
       <Header changeFunc={this.changeFunc} functions={functions} {...{outputMaxReal, outputMaxImaginary}}/>
       <Graph {...Object.assign({}, this.props, viewSettings)} func={func}/>
-      <ReactTooltip />
+      <ReactTooltip class={'custom-tool-tip'}/>
     </div>
   }
 }
