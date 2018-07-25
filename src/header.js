@@ -19,7 +19,7 @@ export default class Header extends Component {
     const {functions, viewTypes, changeOrder, order, changeFunc, outputMaxReal, outputMaxImaginary} = this.props;
     const {viewType} = this.state;
     return <div>
-      <h2>Header</h2>
+      <h2>Color Wheel Graph</h2>
       <div>
         <select onChange={changeFunc}>
           {Object.keys(functions).map((funcName, index) =>
