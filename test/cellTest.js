@@ -9,9 +9,19 @@ describe('Cell', () => {
   });
 
   describe('render', () => {
+    const size = 10;
+    const testCell = new Cell({size, complex: {real: 0, imaginary: 0}});
     it('should create an element with "data-tip" and "style" properties', () => {
-      const testCell = new Cell({size: 10, complex: {real: 0, imaginary: 0}});
       expect(testCell.render().props).to.have.all.keys('data-tip', 'style');
+    });
+
+    it('should create an element that is a square with dimensions equal to "size"', () => {
+      expect(testCell.render().props.style.width)
+        .to
+        .equal(testCell.render().props.style.height);
+      expect(testCell.render().props.style.width)
+        .to
+        .equal(size);
     });
 
     describe('data-tip', () => {
