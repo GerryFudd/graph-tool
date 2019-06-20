@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Container from './container';
+import Container from './layout/Container';
 
 const RESOLUTION = 101;
 
@@ -21,5 +21,5 @@ render();
 
 // Hot Module Replacement API
 if (module.hot) {
-  module.hot.accept('./container', render);
+  module.hot.accept('./layout/Container', render);
 }

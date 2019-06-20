@@ -3,8 +3,8 @@ import {Polynomial, ComplexNumber} from 'calculator';
 import ReactTooltip from 'react-tooltip';
 import _ from 'lodash';
 
-import Graph from './graph';
-import Header from './header';
+import Graph from '../components/Graph';
+import Header from './Header';
 
 const identity = complexNumber => complexNumber;
 const reciprocal = complexNumber => complexNumber.pow(-1);

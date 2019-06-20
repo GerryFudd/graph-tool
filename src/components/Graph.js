@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Polynomial, ComplexNumber} from 'calculator';
 
-import Cell from './cell';
+import Cell from './Cell';
 
 export default class Graph extends Component {
   constructor(props) {
