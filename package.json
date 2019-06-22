@@ -6,6 +6,7 @@
   "scripts": {
     "start": "webpack-dev-server --hot",
     "build": "webpack",
+    "npm-build": "node npm-build",
     "test": "mocha --compilers js:babel-core/register"
   },
   "author": "",
@@ -19,6 +20,7 @@
     "react-tooltip": "^3.6.1"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
     "babel-preset-es2015": "^6.24.1",
@@ -26,10 +28,15 @@
     "calculator": "https://github.com/GerryFudd/calculator.git",
     "enzyme": "^3.6.0",
     "enzyme-adapter-react-16": "^1.5.0",
+    "execa": "^1.0.0",
+    "fs-extra": "^8.0.1",
     "html-webpack-plugin": "^3.2.0",
     "react-hot-loader": "^4.3.3",
     "webpack": "^4.16.1",
     "webpack-cli": "^3.0.8",
     "webpack-dev-server": "^3.1.5"
-  }
+  },
+  "files": [
+    "lib"
+  ]
 }
