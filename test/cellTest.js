@@ -1,7 +1,7 @@
 import React from 'react';
 import {expect} from 'chai';
 
-import Cell from '../src/cell';
+import Cell from '../src/components/Cell';
 
 describe('Cell', () => {
   it('should be a component', () => {

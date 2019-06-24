@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Polynomial, ComplexNumber} from 'calculator';
+import {Polynomial, ComplexNumber} from 'complex-calculator';
 import ReactTooltip from 'react-tooltip';
 import _ from 'lodash';
 

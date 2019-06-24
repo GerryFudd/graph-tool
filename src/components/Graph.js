@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Polynomial, ComplexNumber} from 'calculator';
+import {ComplexNumber} from 'complex-calculator';
 
 import Cell from './Cell';
 
