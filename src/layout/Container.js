@@ -3,7 +3,7 @@ import {Polynomial, ComplexNumber} from 'complex-calculator';
 import ReactTooltip from 'react-tooltip';
 import _ from 'lodash';
 
-import Graph from '../components/Graph';
+import {Graph} from '../components';
 import Header from './Header';
 
 const identity = complexNumber => complexNumber;
