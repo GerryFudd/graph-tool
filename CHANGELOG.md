@@ -12,3 +12,8 @@
 > 2019-06-24
 
 - Fix issue with export.
+
+# [v0.2.0]
+> 2019-06-30
+
+- Allow graph to be more extensible by capturing other props.
