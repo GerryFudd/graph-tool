@@ -17,3 +17,8 @@
 > 2019-06-30
 
 - Allow graph to be more extensible by capturing other props.
+
+# [v0.2.1]
+> 2019-06-30
+
+- Component doesn't block the loading of parent components.
