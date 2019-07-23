@@ -10,6 +10,8 @@ export default class Graph extends Component {
     this.state = {};
 
     this.updateRows = this.updateRows.bind(this);
+
+    this.pageIsActive = true;
   }
   updateRows() {
     const {
@@ -23,7 +25,9 @@ export default class Graph extends Component {
       setTimeout(() => resolve(rowIndices.map(rowIndex => this.renderRow(rowIndex))), 0);
     })
       .then(rows => {
-        this.setState({rows});
+        if (this.pageIsActive) {
+          this.setState({rows});
+        }
       });
   }
   componentDidMount() {
@@ -33,6 +37,9 @@ export default class Graph extends Component {
     if (newProps.func !== this.props.func) {
       this.updateRows();
     }
+  }
+  componentWillUnmount() {
+    this.pageIsActive = false;
   }
   isInteger(i, maximum) {
     return i % Math.ceil((this.props.resolution - 1)/(2 * maximum)) === 0;
