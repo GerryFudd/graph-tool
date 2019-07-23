@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import Graph from './graph';
+import Graph from '../components/Graph';
 
 export default class Header extends Component {
   constructor(props) {

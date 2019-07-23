@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import {Polynomial, ComplexNumber} from 'calculator';
+import {Polynomial, ComplexNumber} from 'complex-calculator';
 import ReactTooltip from 'react-tooltip';
 import _ from 'lodash';
 
-import Graph from './graph';
-import Header from './header';
+import {Graph} from '../components';
+import Header from './Header';
 
 const identity = complexNumber => complexNumber;
 const reciprocal = complexNumber => complexNumber.pow(-1);
@@ -95,7 +95,6 @@ const makeTaylorFunc = ({center, coeficientsFunc}, order) => {
   while(coeficients.length < order + 1) {
     coeficients.push(coeficientsFunc(coeficients.length));
   }
-  console.log(order, coeficients);
   return complexNumber => new Polynomial(coeficients).evaluate(complexNumber.plus(center.times([-1, 0])));
 }
 
@@ -110,13 +109,11 @@ export default class Container extends Component {
   }
   shouldComponentUpdate(nextProps, nextState){
     // return !_.isEqual(nextProps, this.props) || !_.isEqual(nextState, this.state);
-    console.log(this.state, nextState);
     return this.state.viewType !== nextState.viewType || this.state.order !== nextState.order || this.state.func !== nextState.func;
   }
 
   changeFunc(event) {
     const newfunc = event.target.value;
-    console.log('changing function', newfunc);
     this.setState({
       func: functions[newfunc],
       viewSettings: viewSettings[newfunc],
@@ -132,7 +129,7 @@ export default class Container extends Component {
 
   changeOrder(event) {
     this.setState({
-      order: Number.parseInt(event.target.value, 10)
+      order: event.target.value ? Number.parseInt(event.target.value, 10) : 0
     });
   }
 

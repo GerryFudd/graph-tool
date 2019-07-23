@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {ComplexNumber} from 'calculator';
+import {ComplexNumber} from 'complex-calculator';
 
 const scaleTo256 = num => Math.floor(255 * num);
 

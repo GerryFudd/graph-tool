@@ -2,11 +2,11 @@ import React from 'react';
 import {expect} from 'chai';
 import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import {ComplexNumber} from 'calculator';
+import {ComplexNumber} from 'complex-calculator';
 
 
-import Graph from '../src/graph';
-import Cell from '../src/cell';
+import Graph from '../src/components/Graph';
+import Cell from '../src/components/Cell';
 
 describe('graph', () => {
   const resolution = 3;

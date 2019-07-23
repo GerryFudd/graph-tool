@@ -1,12 +1,38 @@
 import React, {Component} from 'react';
-import {Polynomial, ComplexNumber} from 'calculator';
+import {ComplexNumber} from 'complex-calculator';
 
-import Cell from './cell';
+import Cell from './Cell';
 
 export default class Graph extends Component {
   constructor(props) {
     super(props);
     this.zeroIndex = Math.ceil((this.props.resolution - 1) / 2);
+    this.state = {};
+
+    this.updateRows = this.updateRows.bind(this);
+  }
+  updateRows() {
+    const {
+      resolution
+    } = this.props;
+    const rowIndices = [];
+    while (rowIndices.length < resolution) {
+      rowIndices.push(rowIndices.length);
+    }
+    new Promise(resolve => {
+      setTimeout(() => resolve(rowIndices.map(rowIndex => this.renderRow(rowIndex))), 0);
+    })
+      .then(rows => {
+        this.setState({rows});
+      });
+  }
+  componentDidMount() {
+    this.updateRows();
+  }
+  componentDidUpdate(newProps) {
+    if (newProps.func !== this.props.func) {
+      this.updateRows();
+    }
   }
   isInteger(i, maximum) {
     return i % Math.ceil((this.props.resolution - 1)/(2 * maximum)) === 0;
@@ -45,7 +71,7 @@ export default class Graph extends Component {
   }
 
   makeCellProps(cellIndex, rowIndex) {
-    const {func = input => input, resolution, outputMaxReal, outputMaxImaginary, showGridLines = true} = this.props;
+    const {func = input => input, cellSize, resolution, outputMaxReal, outputMaxImaginary, showGridLines = true} = this.props;
     const real = this.makeValueFromIndex(cellIndex, 'windowMaxReal');
     const imaginary = this.makeValueFromIndex(resolution - 1 - rowIndex, 'windowMaxImaginary');
     return {
@@ -53,7 +79,7 @@ export default class Graph extends Component {
       outputMaxImaginary,
       key: cellIndex,
       complex: func(new ComplexNumber(real, imaginary)),
-      size: this.props.cellSize,
+      size: cellSize,
       cellIsGridCell: showGridLines && this.isGridCell(cellIndex, rowIndex)
     };
   }
@@ -77,19 +103,33 @@ export default class Graph extends Component {
   }
 
   render() {
-    const {resolution} = this.props;
-    const rowIndices = [];
-    while (rowIndices.length < resolution) {
-      rowIndices.push(rowIndices.length);
-    }
+    const {rows} = this.state;
+    const {
+      resolution,
+      func,
+      showGridLines,
+      cellSize,
+      windowMaxImaginary,
+      windowMaxReal,
+      outputMaxImaginary,
+      outputMaxReal,
+      ...otherProps
+    } = this.props;
     return <div
       style={{
         display: 'flex',
         'flexDirection': 'column',
         'backgroundColor': '#ccc'
       }}
+      {...otherProps}
     >
-      {rowIndices.map(rowIndex => this.renderRow(rowIndex))}
+      {rows || <div style={{
+        width: cellSize * resolution,
+        height: cellSize * resolution,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}><p>Loading...</p></div>}
     </div>
   }
 }
