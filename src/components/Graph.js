@@ -7,11 +7,32 @@ export default class Graph extends Component {
   constructor(props) {
     super(props);
     this.zeroIndex = Math.ceil((this.props.resolution - 1) / 2);
+    this.state = {};
 
-    this.state = {loaded: false};
+    this.updateRows = this.updateRows.bind(this);
+  }
+  updateRows() {
+    const {
+      resolution
+    } = this.props;
+    const rowIndices = [];
+    while (rowIndices.length < resolution) {
+      rowIndices.push(rowIndices.length);
+    }
+    new Promise(resolve => {
+      setTimeout(() => resolve(rowIndices.map(rowIndex => this.renderRow(rowIndex))), 0);
+    })
+      .then(rows => {
+        this.setState({rows});
+      });
   }
   componentDidMount() {
-    this.setState({loaded: true});
+    this.updateRows();
+  }
+  componentDidUpdate(newProps) {
+    if (newProps.func !== this.props.func) {
+      this.updateRows();
+    }
   }
   isInteger(i, maximum) {
     return i % Math.ceil((this.props.resolution - 1)/(2 * maximum)) === 0;
@@ -94,16 +115,6 @@ export default class Graph extends Component {
       outputMaxReal,
       ...otherProps
     } = this.props;
-    const rowIndices = [];
-    while (rowIndices.length < resolution) {
-      rowIndices.push(rowIndices.length);
-    }
-    if (!rows) {
-      new Promise(resolve => {
-        setTimeout(() => resolve(rowIndices.map(rowIndex => this.renderRow(rowIndex))), 0);
-      })
-        .then(rows => this.setState({rows}));
-    }
     return <div
       style={{
         display: 'flex',
